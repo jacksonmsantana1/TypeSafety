@@ -1,6 +1,7 @@
 {
   "name": "typesafety",
   "description": "Functional type checker",
+  "version": "0.0.1",
   "main": "./dist/index.js",
   "scripts": {
     "commit": "git-cz",
