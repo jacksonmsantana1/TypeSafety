@@ -17,7 +17,7 @@ const TypeSafety = function TypeSafety() {};
  */
 TypeSafety.prototype.nil = function nil(a) {
   if (a === null) {
-	return Either.Left('Null value');
+    return Either.Left('Null value');
   }
 
   return Either.Right(a);
@@ -32,7 +32,7 @@ TypeSafety.nil = TypeSafety.prototype.nil;
  */
 TypeSafety.prototype.undef = function undef(a) {
   if (a === void 0) {
-	return Either.Left('Undefined value');
+    return Either.Left('Undefined value');
   }
 
   return Either.Right(a);
@@ -59,13 +59,10 @@ TypeSafety.nan = TypeSafety.prototype.nan;
  * @param a
  */
 TypeSafety.prototype.falsy = function falsy(a) {
-  if (a === '' ||
-      a === 0 ||
-      isNil(a) ||
-      a === 'false' ||
-      Number.isNaN(a) ||
-      !a) {
-   return Either.Right(false);
+  if (a === '' || a === 0 ||
+      isNil(a) || a === 'false' ||
+      Number.isNaN(a) || !a) {
+    return Either.Right(false);
   }
 
   return Either.Left('No falsy value was given');
@@ -78,13 +75,9 @@ TypeSafety.falsy = TypeSafety.prototype.falsy;
  * @param a
  */
 TypeSafety.prototype.truthy = function truthy(a) {
-  if (a !== '' &&
-      a !== 0 &&
-      !isNil(a) &&
-      a !== 'false' &&
-      !Number.isNaN(a) &&
-      !!a) {
-   return Either.Right(true);
+  if (a !== '' && a !== 0 && !isNil(a) &&
+      a !== 'false' && !Number.isNaN(a) && !!a) {
+    return Either.Right(true);
   }
 
   return Either.Left('No truthy value was given');
@@ -99,11 +92,11 @@ TypeSafety.truthy = TypeSafety.prototype.truthy;
  */
 TypeSafety.prototype.typeOf = function typeOf(type) {
   return function typeOfX(x) {
-	if (typeof x === type) {
-	  return x;
-	}
+    if (typeof x === type) {
+      return x;
+    }
 
-	throw new TypeError(`Error: ${type} expected, ${typeof x} given.`);
+    throw new TypeError(`Error: ${type} expected, ${typeof x} given.`);
   };
 };
 
@@ -116,13 +109,14 @@ TypeSafety.typeOf = TypeSafety.prototype.typeOf;
  */
 TypeSafety.prototype.typeOF = function typeOF(type) {
   return function typeOFX(x) {
-	if (typeof x === type) {
-	  return Either.Right(x);
-	}
+    if (typeof x === type) {
+      return Either.Right(x);
+    }
 
-	return Either.Left(`Error: ${type} expected, ${typeof x} given.`);
+    return Either.Left(`Error: ${type} expected, ${typeof x} given.`);
   };
 };
+
 TypeSafety.typeOF = TypeSafety.prototype.typeOF;
 
 /**
@@ -132,11 +126,11 @@ TypeSafety.typeOF = TypeSafety.prototype.typeOF;
  */
 TypeSafety.prototype.objectTypeOf = function objectTypeOf(name) {
   return function objTypeOfO(o) {
-	if (Object.prototype.toString.call(o) === `[object ${name}]`) {
-	  return o;
-	}
+    if (Object.prototype.toString.call(o) === `[object ${name}]`) {
+      return o;
+    }
 
-	throw new TypeError(`Error: ${name} expected, something else given.`);
+    throw new TypeError(`Error: ${name} expected, something else given.`);
   };
 };
 
@@ -150,14 +144,14 @@ TypeSafety.objectTypeOf = TypeSafety.prototype.objectTypeOf;
 TypeSafety.prototype.objectTypeOF = function objectTypeOF(name) {
   return function objTypeOfO(o) {
     if (o === null) {
-	return Either.Left('Null value');
+      return Either.Left('Null value');
     } else if (o === void 0) {
-	return Either.Left('Undefined value');
+      return Either.Left('Undefined value');
     } else if (Object.prototype.toString.call(o) === `[object ${name}]`) {
       return Either.Right(o);
-    } else { 
-      return Either.Left(`Error: ${name} expected, something else given.`);
     }
+
+    return Either.Left(`Error: ${name} expected, something else given.`);
   };
 };
 
@@ -189,7 +183,7 @@ TypeSafety.ARR = TypeSafety.objectTypeOF('Array');
  */
 TypeSafety.prototype.arrayOf = function arrayOf(f) {
   return function arrayOfA(a) {
-	return map(TypeSafety.func(f), TypeSafety.arr(a));
+    return map(TypeSafety.func(f), TypeSafety.arr(a));
   };
 };
 
@@ -208,15 +202,14 @@ TypeSafety.prototype.arrayOF = function arrayOF(f) {
 
 TypeSafety.arrayOF = TypeSafety.prototype.arrayOF;
 
-
 /**
  * String -> Right(String) | Left(Error)
  * @type {TypeSafety.arrTypeOf|*}
  */
 TypeSafety.prototype.strTypeOf = function strTypeOf(str) {
   return TypeSafety.undef(str)
-	.chain(TypeSafety.nil)
-	.chain(TypeSafety.STR);
+    .chain(TypeSafety.nil)
+    .chain(TypeSafety.STR);
 };
 
 TypeSafety.strTypeOf = TypeSafety.prototype.strTypeOf;
@@ -228,8 +221,8 @@ TypeSafety.strTypeOf = TypeSafety.prototype.strTypeOf;
  */
 TypeSafety.prototype.boolTypeOf = function boolTypeOf(n) {
   return TypeSafety.nil(n)
-	.chain(TypeSafety.undef)
-	.chain(TypeSafety.BOOL);
+    .chain(TypeSafety.undef)
+    .chain(TypeSafety.BOOL);
 };
 
 TypeSafety.boolTypeOf = TypeSafety.prototype.boolTypeOf;
@@ -241,9 +234,9 @@ TypeSafety.boolTypeOf = TypeSafety.prototype.boolTypeOf;
  */
 TypeSafety.prototype.numTypeOf = function numTypeOf(n) {
   return TypeSafety.nil(n)
-	.chain(TypeSafety.undef)
-	.chain(TypeSafety.NUM)
-	.chain(TypeSafety.nan);
+    .chain(TypeSafety.undef)
+    .chain(TypeSafety.NUM)
+    .chain(TypeSafety.nan);
 };
 
 TypeSafety.numTypeOf = TypeSafety.prototype.numTypeOf;
