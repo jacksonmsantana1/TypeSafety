@@ -1,6 +1,6 @@
 {
   "name": "typesafety",
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.1-semantically-released",
   "description": "Functional type checker",
   "main": "./dist/index.js",
   "scripts": {
