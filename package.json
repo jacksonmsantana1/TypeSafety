@@ -12,7 +12,7 @@
     "test:cover": "istanbul cover -x *.spec.js _mocha -- -R spec test/index.spec.js ",
     "test:unit": "mocha --compilers js:babel-core/register ./src/*.js --reporter nyan",
     "test:build": "babel --out-dir test src",
-    "test": "npm run test:cover && npm run test:unit",
+    "test": "npm run lint && npm run test:cover && npm run test:unit",
     "posttest": "rm -rf test",
     "check-coverage": "istanbul check-coverage --statements 70 --branches 70 --functions 70 --lines 70",
     "prebuild": "rm -rf dist index.*.js",
@@ -65,7 +65,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run lint && npm run test && npm run check-coverage"
+      "pre-commit": "npm run test && npm run check-coverage"
     }
   }
 }

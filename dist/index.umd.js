@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param a
 	 */
 	TypeSafety.prototype.undef = function undef(a) {
-	  if (a === void 0) {
+	  if (a === undefined) {
 	    return _data2.default.Left('Undefined value');
 	  }
 	
@@ -209,7 +209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function objTypeOfO(o) {
 	    if (o === null) {
 	      return _data2.default.Left('Null value');
-	    } else if (o === void 0) {
+	    } else if (o === undefined) {
 	      return _data2.default.Left('Undefined value');
 	    } else if (Object.prototype.toString.call(o) === '[object ' + name + ']') {
 	      return _data2.default.Right(o);
