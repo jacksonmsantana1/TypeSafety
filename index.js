@@ -124,6 +124,7 @@ TypeSafety.prototype.typeOF = function typeOF(type) {
     return _data2.default.Left('Error: ' + type + ' expected, ' + (typeof x === 'undefined' ? 'undefined' : _typeof(x)) + ' given.');
   };
 };
+
 TypeSafety.typeOF = TypeSafety.prototype.typeOF;
 
 /**
@@ -156,9 +157,9 @@ TypeSafety.prototype.objectTypeOF = function objectTypeOF(name) {
       return _data2.default.Left('Undefined value');
     } else if (Object.prototype.toString.call(o) === '[object ' + name + ']') {
       return _data2.default.Right(o);
-    } else {
-      return _data2.default.Left('Error: ' + name + ' expected, something else given.');
     }
+
+    return _data2.default.Left('Error: ' + name + ' expected, something else given.');
   };
 };
 
